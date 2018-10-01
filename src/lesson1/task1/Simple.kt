@@ -68,7 +68,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = (hours*3600 + minutes
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  *
  */
-fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =sagenes * 48.0* 0.4445 + arshins* 16.0 * 0.4445 + vershoks* 0.4445
+fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = (sagenes * 48.0 + arshins * 16.0 + vershoks) / 100 * 4.445
 
 /**
  * Тривиальная
@@ -84,7 +84,7 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double = (grad + min/60.0 + se
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt(x2 - x1)+ sqrt(y2 - y1)
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt(sqr(x2 - x1)+sqr(y2 - y1))
 /**
  * Простая
  *
@@ -108,7 +108,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Int): Double = initial * (1+ percent*0.01)*3
+fun accountInThreeYears(initial: Int, percent: Int): Double = initial * (1 + percent * 0.01).pow(3.0)
 
 /**
  * Простая
@@ -116,4 +116,4 @@ fun accountInThreeYears(initial: Int, percent: Int): Double = initial * (1+ perc
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int = number / 100 + number % 10 + number / 10
+fun numberRevert(number: Int): Int = number / 100 + number % 10 * 100 + number / 10 % 10 * 10
