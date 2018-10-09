@@ -142,12 +142,14 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int =
-        when { a * a + b * b == c -> 1
-            a * a + b * b > c * c && a * a + c * c > b * b && b * b + c * c > a * a -> 0
-            a * a + b * b < c * c -> 2
-            else -> -1
-        }
+fun triangleKind(a: Double, b: Double, c: Double): Int = when {
+    a + b < c || a + c < b || b + c < a -> -1
+    a * a + b * b == c * c || b * b + c * c == a * a || a * a + c * c == b * b -> 1
+    a * a + b * b < c * c || b * b + c * c < a * a || a * a + c * c < b * b -> 2
+    a * a + b * b > c * c || b * b + c * c > a * a || a * a + c * c > b * b -> 0
+    else -> -1
+}
+
 
 
 /**
