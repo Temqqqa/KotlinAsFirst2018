@@ -4,9 +4,7 @@ package lesson3.task1
 
 import kotlinx.html.InputType
 import lesson1.task1.sqr
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Пример
@@ -183,7 +181,20 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var count = 0
+    var x1 = x
+    while (x1 != 1) {
+        if (x1 % 2 == 0) {
+            x1 / 2
+            count++
+        } else {
+            x1 = x1 * 3 + 1
+            count++
+        }
+    }
+    return count
+}
 
 /**
  * Средняя
@@ -192,7 +203,18 @@ fun collatzSteps(x: Int): Int = TODO()
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var sinx = x % (2 * PI)
+    var a = sinx
+    val b = sinx
+    var count = 2
+    while (abs(a) >= eps) {
+        a = -1 * a * b * b / (count * (count + 1))
+        sinx += a
+        count += 2
+    }
+    return sinx
+}
 
 /**
  * Средняя
@@ -201,7 +223,19 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var cosx = 1.0
+    var a = 1.0
+    val b = x % (2 * PI)
+    var count = 1
+    while (abs(a) >= eps) {
+        a = -1 * a * b * b / (count * (count + 1))
+        cosx += a
+        count += 2
+    }
+    return cosx
+}
+
 
 /**
  * Средняя
@@ -210,7 +244,15 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var x = 0
+    val number = n
+    while (number != 0) {
+        x = x * 10 + number % 10
+        number / 10
+    }
+    return x
+}
 
 /**
  * Средняя
@@ -221,7 +263,18 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    val rev = revert(n)
+    val a = n
+    for (i in 1..digitNumber(n)) {
+        if (a % 10 == rev % 10) {
+            a / 10
+            rev / 10
+        } else return false
+    }
+    return true
+}
+
 
 /**
  * Средняя
@@ -231,7 +284,15 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    val a = n / 10
+    val b = n % 10
+    while (a > 0) {
+        if (a % 10 != b) return true
+        a / 10
+    }
+    return false
+}
 
 /**
  * Сложная
@@ -242,7 +303,17 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var k = 0
+    var number = 1
+    var sqr = 0
+    while (k < n) {
+        sqr = number * number
+        k += digitNumber(sqr)
+        number++
+    }
+    return sqr / 10.0.pow(k - n.toDouble()).toInt() % 10
+}
 
 /**
  * Сложная
@@ -253,4 +324,12 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var k = 0
+    var number = 0
+    while (k < n) {
+        number++
+        k += digitNumber(fib(number))
+    }
+    return fib(number) / 10.0.pow(k - n.toDouble()).toInt() % 10
+}
