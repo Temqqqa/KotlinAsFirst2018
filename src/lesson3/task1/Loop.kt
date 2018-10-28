@@ -75,7 +75,7 @@ fun digitNumber(n: Int): Int {
     do {
         number /= 10
         x++
-    } while (number > 0)
+    } while (number != 0)
     return x
 }
 
@@ -88,7 +88,9 @@ fun digitNumber(n: Int): Int {
 fun fib(n: Int): Int {
     var a = 1
     var b = 1
-    if (n == 1 || n == 2) return 1
+    if
+            (n == 1 || n == 2)
+        return 1
     else {
         for (i in 3..n) {
             a += b
@@ -185,14 +187,12 @@ fun collatzSteps(x: Int): Int {
     var count = 0
     var x1 = x
     while (x1 != 1) {
-        if (x1 % 2 == 0) {
-            x1 / 2
-            count++
-        } else {
-            x1 = x1 * 3 + 1
-            count++
-        }
+        if (x1 % 2 == 0)
+            x1 /= 2
+        else x1 = x1 * 3 + 1
+        count++
     }
+
     return count
 }
 
@@ -246,10 +246,10 @@ fun cos(x: Double, eps: Double): Double {
  */
 fun revert(n: Int): Int {
     var x = 0
-    val number = n
+    var number = n
     while (number != 0) {
         x = x * 10 + number % 10
-        number / 10
+        number /= 10
     }
     return x
 }
@@ -267,7 +267,7 @@ fun isPalindrome(n: Int): Boolean {
     val rev = revert(n)
     val a = n
     for (i in 1..digitNumber(n)) {
-        if (a % 10 == rev % 10) {
+        if (a == rev) {
             a / 10
             rev / 10
         } else return false
@@ -285,11 +285,11 @@ fun isPalindrome(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    val a = n / 10
+    var a = n / 10
     val b = n % 10
     while (a > 0) {
         if (a % 10 != b) return true
-        a / 10
+        a /= 10
     }
     return false
 }
@@ -333,3 +333,4 @@ fun fibSequenceDigit(n: Int): Int {
     }
     return fib(number) / 10.0.pow(k - n.toDouble()).toInt() % 10
 }
+
