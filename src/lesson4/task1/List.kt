@@ -273,7 +273,15 @@ fun convertToString(n: Int, base: Int): String {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var a = 1
+    var b = 0
+    digits.reversed().forEach {
+        b += it * a
+        a *= base
+    }
+    return b
+}
 
 /**
  * Сложная
@@ -284,7 +292,7 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int = str.toInt(base)
 
 /**
  * Сложная
@@ -294,7 +302,52 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var a = ""
+    a += when (n / 1000) {
+        1 -> "M"
+        2 -> "MM"
+        3 -> "MMM"
+        else -> ""
+    }
+    a += when (n / 100 % 10) {
+        1 -> "C"
+        2 -> "CC"
+        3 -> "CCC"
+        4 -> "CD"
+        5 -> "D"
+        6 -> "DC"
+        7 -> "DCC"
+        8 -> "DCCC"
+        9 -> "CM"
+        else -> ""
+    }
+    a += when (n / 10 % 10) { 1 -> a += "X"
+        2 -> "XX"
+        3 -> "XXX"
+        4 -> "XL"
+        5 -> "L"
+        6 -> "LX"
+        7 -> "LXX"
+        8 -> "LXXX"
+        9 -> "XC"
+        else -> ""
+    }
+    a += when (n % 10) {
+        1 -> "I"
+        2 -> "II"
+        3 -> "III"
+        4 -> "IV"
+        5 -> "V"
+        6 -> "VI"
+        7 -> "VII"
+        8 -> "VIII"
+        9 -> "IX"
+        else -> ""
+    }
+    return a
+
+}
 
 /**
  * Очень сложная
@@ -303,4 +356,4 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String = TODO ()

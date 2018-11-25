@@ -5,6 +5,7 @@ package lesson2.task2
 import lesson1.task1.sqr
 import java.lang.Math.abs
 import java.lang.Math.sqrt
+import kotlin.math.abs
 
 /**
  * Пример

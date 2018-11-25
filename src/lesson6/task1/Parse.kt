@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 /**
  * Пример
  *
@@ -49,12 +51,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -71,7 +71,19 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ").toMutableList()
+    if (parts.size != 3) return ""
+    parts[1] = (months.indexOf(parts[1]) + 1).toString()
+    if (parts[0].toIntOrNull() == null || parts[1].toIntOrNull() == null || parts[2].toIntOrNull() == null) return ""
+    if (parts[1] == "0") return ""
+    if (parts[0].toInt() !in 1..daysInMonth(parts[1].toInt(), parts[2].toInt())) return ""
+    return String.format("%02d.%02d.%s", parts[0].toInt(), parts[1].toInt(), parts[2])
+}
+
+val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября",
+        "ноября", "декабря")
+
 
 /**
  * Средняя
@@ -83,7 +95,15 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".").toMutableList()
+    if (parts.size != 3) return ""
+    if (parts[0].toIntOrNull() == null || parts[1].toIntOrNull() == null || parts[2].toIntOrNull() == null) return ""
+    if (parts[1].toInt() !in 1..12) return ""
+    if (parts[0].toInt() !in 1..daysInMonth(parts[1].toInt(), parts[2].toInt())) return ""
+    parts[1] = months[parts[1].toInt() - 1]
+    return String.format("%d %s %s", parts[0].toInt(), parts[1], parts[2])
+}
 
 /**
  * Средняя
@@ -109,7 +129,18 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    var a = jumps.split(" ")
+    a = a.filter { it != "%" && it != "-" && it != "" }
+    if (a.isEmpty()) return -1
+    return a.maxBy {
+        try {
+            it.toInt()
+        } catch (e: Exception) {
+            return -1
+        }
+    }!!.toInt()
+}
 
 /**
  * Сложная
@@ -143,7 +174,15 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var a = 0
+    val word = str.split(" ")
+    for (i in 0 until word.size - 1)
+        if (word[i].toLowerCase() == word[i + 1].toLowerCase())
+            return a
+        else a += word[i].length + 1
+    return -1
+}
 
 /**
  * Сложная
@@ -156,7 +195,22 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val str = description.split("; ")
+    var a = ""
+    var b = 0.0
+    for (i in str) {
+        val newStr = i.split(" ")
+        if (newStr.size == 2) {
+            if (newStr[1].toDouble() >= b) {
+                b = newStr[1].toDouble()
+                a = newStr[0]
+            }
+        } else return ""
+    }
+    return a
+}
+
 
 /**
  * Сложная
