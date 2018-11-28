@@ -88,15 +88,13 @@ fun digitNumber(n: Int): Int {
 fun fib(n: Int): Int {
     var a = 1
     var b = 1
-    if
-            (n == 1 || n == 2)
-        return 1
+    return if (n == 1 || n == 2) 1
     else {
         for (i in 3..n) {
             a += b
             b = a - b
         }
-        return a
+        a
     }
 }
 
@@ -131,11 +129,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var max = n - 1
-    while (n % max != 0) max--
-    return max
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -264,12 +258,12 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    val rev = revert(n)
-    val a = n
+    var rev = revert(n)
+    var a = n
     for (i in 1..digitNumber(n)) {
-        if (a == rev) {
-            a / 10
-            rev / 10
+        if (a % 10 == rev % 10) {
+            a /= 10
+            rev /= 10
         } else return false
     }
     return true

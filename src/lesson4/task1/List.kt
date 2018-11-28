@@ -120,8 +120,8 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var x = 0.0
-    for (i in 0 until v.size)
-        x += v[i] * v[i]
+    for (element in v)
+        x += element * element
     return sqrt(x)
 }
 
@@ -131,11 +131,9 @@ fun abs(v: List<Double>): Double {
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    var a = 0.0
-    if (list.isEmpty()) return 0.0
-    for (i in 0 until list.size)
-        a += list[i]
-    return a / list.size
+    var x = 0.0
+    return if (list.isEmpty()) return 0.0
+    else list.sum() / list.size
 }
 
 /**
@@ -252,19 +250,10 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String {
-    var x = ""
-    var g = n
-    while (g != 0) {
-        val b = g % base
-        if (b < 10)
-            x += b.toString()
-        else x += ('a' + (b - 10))
-        g /= base
-    }
-    if (n == 0) x = "0"
-    return x.reversed()
-}
+fun convertToString(n: Int, base: Int): String =
+        convert(n, base).joinToString(
+                separator = "",
+                transform = { if (it > 9) ('a' + it - 10).toString() else "$it" })
 
 /**
  * Средняя
@@ -356,4 +345,4 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO ()
+fun russian(n: Int): String = TODO()
