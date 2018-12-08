@@ -261,7 +261,7 @@ fun isPalindrome(n: Int): Boolean {
     var rev = revert(n)
     var a = n
     for (i in 1..digitNumber(n)) {
-        if (a % 10 == rev % 10) {
+        if (a == rev) {
             a /= 10
             rev /= 10
         } else return false

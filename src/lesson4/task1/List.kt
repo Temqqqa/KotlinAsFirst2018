@@ -2,6 +2,7 @@
 
 package lesson4.task1
 
+import kotlinx.html.InputType
 import lesson1.task1.discriminant
 import lesson3.task1.minDivisor
 import java.io.File.separator
@@ -292,50 +293,17 @@ fun decimalFromString(str: String, base: Int): Int = str.toInt(base)
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    var a = ""
-    a += when (n / 1000) {
-        1 -> "M"
-        2 -> "MM"
-        3 -> "MMM"
-        else -> ""
+    val rome = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    val arab = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    val result = StringBuilder()
+    var number = n
+    var listNumber = arab.size - 1
+    while (number > 0) {
+        while (arab[listNumber] > number) listNumber -= 1
+        result.append(rome[listNumber])
+        number -= arab[listNumber]
     }
-    a += when (n / 100 % 10) {
-        1 -> "C"
-        2 -> "CC"
-        3 -> "CCC"
-        4 -> "CD"
-        5 -> "D"
-        6 -> "DC"
-        7 -> "DCC"
-        8 -> "DCCC"
-        9 -> "CM"
-        else -> ""
-    }
-    a += when (n / 10 % 10) { 1 -> a += "X"
-        2 -> "XX"
-        3 -> "XXX"
-        4 -> "XL"
-        5 -> "L"
-        6 -> "LX"
-        7 -> "LXX"
-        8 -> "LXXX"
-        9 -> "XC"
-        else -> ""
-    }
-    a += when (n % 10) {
-        1 -> "I"
-        2 -> "II"
-        3 -> "III"
-        4 -> "IV"
-        5 -> "V"
-        6 -> "VI"
-        7 -> "VII"
-        8 -> "VIII"
-        9 -> "IX"
-        else -> ""
-    }
-    return a
-
+    return result.toString()
 }
 
 /**
