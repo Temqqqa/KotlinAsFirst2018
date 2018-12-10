@@ -258,14 +258,7 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    var rev = revert(n)
-    var a = n
-    for (i in 1..digitNumber(n)) {
-        if (a == rev) {
-            a /= 10
-            rev /= 10
-        } else return false
-    }
+    if (n == revert(n)) else return false
     return true
 }
 
