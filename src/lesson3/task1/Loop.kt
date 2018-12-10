@@ -257,10 +257,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    if (n == revert(n)) else return false
-    return true
-}
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 
 /**
