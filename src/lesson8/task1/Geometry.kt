@@ -89,7 +89,7 @@ data class Circle(val center: Point, val radius: Double) {
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = TODO()
+    fun contains(p: Point): Boolean = p.distance(center) <= radius
 }
 
 /**
@@ -109,7 +109,25 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment = TODO()
+fun diameter(vararg points: Point): Segment {
+    if (points.size < 2)
+        throw IllegalArgumentException()
+    if (points.size == 2)
+        return Segment(points[0], points[1])
+    var fp = Point(0.0, 0.0)
+    var sp = Point(0.0, 0.0)
+    var md = 0.0
+    for (i in 0 until points.size - 1)
+        for (j in i + 1 until points.size) {
+            val d = points[i].distance(points[j])
+            if (d > md) {
+                md = d
+                fp = points[i]
+                sp = points[j]
+            }
+        }
+    return Segment(fp, sp)
+}
 
 /**
  * Простая
@@ -179,6 +197,7 @@ fun bisectorByPoints(a: Point, b: Point): Line = TODO()
  * Если в списке менее двух окружностей, бросить IllegalArgumentException
  */
 fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
+
 
 /**
  * Сложная

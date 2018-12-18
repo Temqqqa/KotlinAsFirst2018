@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson8.task2
 
 /**
@@ -21,8 +22,14 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String = TODO()
+    fun notation(): String =
+            if (!inside()) ""
+            else {
+                val l = listOf("a", "b", "c", "d", "e", "f", "g", "h")
+                l[column - 1] + row.toString()
+            }
 }
+
 
 /**
  * Простая
@@ -31,7 +38,14 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = TODO()
+fun square(notation: String): Square {
+    return if (!Regex("""[a-h][1-8]""").containsMatchIn(notation) ||
+            notation.length != 2) throw  IllegalArgumentException()
+    else {
+        val n = mapOf('a' to 1, 'b' to 2, 'c' to 3, 'd' to 4, 'e' to 5, 'f' to 6, 'g' to 7, 'h' to 8)
+        Square(n[notation[0]]!!, notation[1].toString().toInt())
+    }
+}
 
 /**
  * Простая
@@ -56,7 +70,12 @@ fun square(notation: String): Square = TODO()
  * Пример: rookMoveNumber(Square(3, 1), Square(6, 3)) = 2
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
-fun rookMoveNumber(start: Square, end: Square): Int = TODO()
+fun rookMoveNumber(start: Square, end: Square): Int {
+    return if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    else if (start == end) 0
+    else if (start.column == end.column || start.row == end.row) 1
+    else 2
+}
 
 /**
  * Средняя
@@ -203,3 +222,4 @@ fun knightMoveNumber(start: Square, end: Square): Int = TODO()
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
 fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()
+
